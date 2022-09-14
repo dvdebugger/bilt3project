@@ -13,7 +13,7 @@ pipeline {
 
     stages {
         
-        stage('quality scan'){
+       stage('quality scan'){
             steps{
                 sh '''
             mvn clean verify sonar:sonar \
@@ -23,7 +23,7 @@ pipeline {
                 '''
             }
         }
- 
+        
         stage('Validate') {
             steps {
                 sh "mvn validate"
@@ -62,6 +62,7 @@ pipeline {
                 }
             
         }
+        }
     
         stage('publish artfacts to s3') {
             steps {
@@ -79,7 +80,8 @@ pipeline {
             }
         }
 
-        }
+    
+}
+    }
  }
-}
-}
+

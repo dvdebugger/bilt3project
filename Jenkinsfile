@@ -13,16 +13,7 @@ pipeline {
 
     stages {
         
-       stage('quality scan'){
-            steps{
-                sh '''
-            mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=online-Amjad-B2D2 \
-  -Dsonar.host.url=http://52.23.193.18 \
-  -Dsonar.login=sqp_18e8efb1dcbf32a0af39bc6d079337796e593148
-                '''
-            }
-        }
+
 
         stage('Validate') {
             steps {

@@ -34,11 +34,6 @@ pipeline {
                 
             }
        
-            post {
-                always{
-                    junit '**/target/test-classes'
-                }
-            }
         }
 
 

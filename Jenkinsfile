@@ -1,19 +1,19 @@
 pipeline {
     agent any
     environment{   
-        AWS_S3_BUCKET = "amjad-belt2d2-artifacts-123456"
-        ARTIFACT_NAME = "hello-world.jar"
-        AWS_ACCESS_KEY_ID     = credentials('amjad-aws-secret-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('amjad-aws-secret-access-key')
-        AWS_EB_APP_NAME = "amjad-jenkins"
+        AWS_S3_BUCKET = "get-married"
+        ARTIFACT_NAME = "hello-world.war"
+        AWS_ACCESS_KEY_ID     = credentials('USER')
+        AWS_SECRET_ACCESS_KEY = credentials('PASS')
+        AWS_EB_APP_NAME = "get-marred"
         AWS_EB_APP_VERSION = "${BUILD_ID}"
-        AWS_EB_ENVIRONMENT = "Amjadjenkins-env"
+        AWS_EB_ENVIRONMENT = "Getmarred-env"
     
-
+    }
 
     stages {
         
-        stage('quality scan'){
+       stage('quality scan'){
             steps{
                 sh '''
             mvn clean verify sonar:sonar \
@@ -23,7 +23,7 @@ pipeline {
                 '''
             }
         }
- 
+
         stage('Validate') {
             steps {
                 sh "mvn validate"
@@ -62,6 +62,7 @@ pipeline {
                 }
             
         }
+        }
     
         stage('publish artfacts to s3') {
             steps {
@@ -81,3 +82,5 @@ pipeline {
 
     
 }
+    }
+ 

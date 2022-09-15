@@ -1,4 +1,4 @@
-# Project: Final DevOps BootCamp Project (playdatenow)
+# Final DevOps BootCamp Project: playdatenow
 
 ##Overview
 1- Create and deploy an EC2 machine using your favorite IAC tool “Cloud Formation”

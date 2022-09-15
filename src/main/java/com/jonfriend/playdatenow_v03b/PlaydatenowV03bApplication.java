@@ -17,10 +17,10 @@ public class PlaydatenowV03bApplication {
     public TomcatServletWebServerFactory servletContainer() {
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
         Connector ajpConnector = new Connector("AJP/1.3");
-        ajpConnector.setPort(9090);
+        ajpConnector.setPort( 8800);
         ajpConnector.setSecure(false);
-        ajpConnector.setAllowTrace(false);
-        ajpConnector.setScheme("http");
+        ajpConnector.setAllowTrace( false);
+        ajpConnector.setScheme( "http");
        ((AbstractAjpProtocol<?>)ajpConnector.getProtocolHandler()).setSecretRequired(false);
     tomcat.addAdditionalTomcatConnectors(ajpConnector);
     return tomcat;

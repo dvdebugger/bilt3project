@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: This is my first templet 
+
+Resources:
+   publicDistribution:
+      Type: AWS::CloudFront::LoadBalancer
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName: awseb-awseb-1bo2lhr6bmp6x-865879098.us-east-1.elb.amazonaws.com
+              Id: awseb-awseb-1bo2lhr6bmp6x-865879098.us-east-1.elb.amazonaws.com
+              loadOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: match-viewr
+                OriginSSLProtocols: 
+                  - TLSc1.2
+                
+          Enabled: 'true'
+
+          DefaultCacheBehavior: 
+            AllowedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: awseb-awseb-1bo2lhr6bmp6x-865879098.us-east-1.elb.amazonaws.com
+            ForwardedValues:
+              QueryString: 'false'
+              Cookies:
+                Forward: none
+            ViewerProtocolPolicy: redirect-to-https

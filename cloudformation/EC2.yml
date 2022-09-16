@@ -1,0 +1,98 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: This is my first templet 
+
+Mappings: 
+  RegionWiseImageIds: 
+      us-east-1: 
+        Ubuntu: ami-052efd3df9dad4825
+     
+
+Resources:
+  EC2linux:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap 
+        - RegionWiseImageIds
+        - !Ref AWS::Region
+        - Ubuntu
+      InstanceType: t2.medium
+      SecurityGroupIds: 
+        - Ref: SecurityGroup
+      Tags:
+       -
+         Key: Name 
+         Value: Jenkins
+       - 
+         Key: Project 
+         Value: My first instance 
+  
+  EC2ubuntu:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap 
+        - RegionWiseImageIds
+        - !Ref AWS::Region
+        - Ubuntu
+      InstanceType: t2.medium
+      SecurityGroupIds: 
+        - Ref: SecurityGroup2
+      Tags:
+       -
+         Key: Name 
+         Value:  Ansible
+       - 
+         Key: Project 
+         Value: My first instance 
+      UserData:
+          Fn::Base64:
+            !Sub |
+                #!/bin/bash
+                sudo apt update
+                sudo apt install -y software-properties-common
+                sudo apt-add-repository --yes --update ppa:ansible/ansible
+                sudo apt install -y ansible
+                
+
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId:  vpc-0929756af8768c97f
+      GroupDescription: Allow http to client host
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+  
+  SecurityGroup2:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId:  vpc-0929756af8768c97f
+      GroupDescription: Allow http to client host
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      UserData:
+        Fn::Base64:
+          !Sub |  
+           #!/bin/bash
+           sudo apt-get install openjdk-11-jdk -y
+           
+
+
+
+  
+   

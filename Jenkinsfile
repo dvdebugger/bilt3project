@@ -1,19 +1,28 @@
 pipeline {
     agent any
     environment{   
-        AWS_S3_BUCKET = "anaasmeamjad"
+        AWS_S3_BUCKET = "get-married"
         ARTIFACT_NAME = "hello-world.war"
         AWS_ACCESS_KEY_ID     = credentials('USER')
         AWS_SECRET_ACCESS_KEY = credentials('PASS')
-        AWS_EB_APP_NAME = "amjad"
+        AWS_EB_APP_NAME = "get-marred"
         AWS_EB_APP_VERSION = "${BUILD_ID}"
-        AWS_EB_ENVIRONMENT = "Amjad-env"
+        AWS_EB_ENVIRONMENT = "Getmarred-env"
     
     }
 
     stages {
         
-
+       stage('quality scan'){
+            steps{
+                sh '''
+            mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=online-Amjad-B2D2 \
+  -Dsonar.host.url=http://52.23.193.18 \
+  -Dsonar.login=sqp_18e8efb1dcbf32a0af39bc6d079337796e593148
+                '''
+            }
+        }
 
         stage('Validate') {
             steps {
@@ -34,6 +43,11 @@ pipeline {
                 
             }
        
+            post {
+                always{
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                }
+            }
         }
 
 
@@ -56,14 +70,6 @@ pipeline {
                 sh "aws s3 cp ./target/**.war s3://$AWS_S3_BUCKET/$ARTIFACT_NAME"
             }
         }
-        
-        stage('db') {
-            steps {
-                sh "mvn spring-boot:run"
-                
-            }
-       
-        }
 
         stage('Deploy') {
             steps {
@@ -78,4 +84,3 @@ pipeline {
 }
     }
  
-

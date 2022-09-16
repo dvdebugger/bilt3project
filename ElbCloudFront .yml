@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Cloudfront-Pojects
+Resources:
+  myDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+        - DomainName: awseb-AWSEB-16UXS8Z7VPA5F-190624157.us-east-1.elb.amazonaws.com
+          Id: CloudFront Origin
+          CustomOriginConfig:
+            OriginProtocolPolicy: match-viewer
+        DefaultRootObject: index.jsp
+        DefaultCacheBehavior:
+          TargetOriginId: CloudFront Origin
+          ForwardedValues:
+            QueryString: true
+          ViewerProtocolPolicy: allow-all
+        CacheBehaviors:
+        - TargetOriginId: CloudFront Origin
+          ForwardedValues:
+            QueryString: false
+          ViewerProtocolPolicy: allow-all
+          MinTTL: 500
+          PathPattern: '*.jpg'
+        Comment: Create CloudFront Distribution Using CloudFormation.
+        Enabled: true
+
+Outputs:
+  DistributionId:
+    Description: CloudFront Distribution Id
+    Value: !Ref 'myDistribution'      

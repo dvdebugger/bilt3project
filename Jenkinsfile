@@ -5,9 +5,9 @@ pipeline {
         ARTIFACT_NAME = "hello-world.war"
         AWS_ACCESS_KEY_ID     = credentials('USER')
         AWS_SECRET_ACCESS_KEY = credentials('PASS')
-        AWS_EB_APP_NAME = "get-marred"
+        AWS_EB_APP_NAME = "Debuggers"
         AWS_EB_APP_VERSION = "${BUILD_ID}"
-        AWS_EB_ENVIRONMENT = "Getmarred-env"
+        AWS_EB_ENVIRONMENT = "Debuggers-env"
     
     }
 
@@ -39,7 +39,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh "mvn test"
+                #sh "mvn test"
                 
             }
        

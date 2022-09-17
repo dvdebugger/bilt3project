@@ -37,11 +37,7 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
 
-        }
-        }
 
         stage('Package') {
             steps {

@@ -40,7 +40,7 @@ Resources:
   sampleEnvironment:
     Type: AWS::ElasticBeanstalk::Environment
     Properties:
-      EnvironmentName: Debuggers
+      EnvironmentName: Debuggers-env
       VersionLabel : 
         Ref: sampleApplicationVersion
       ApplicationName:

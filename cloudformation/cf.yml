@@ -52,8 +52,7 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
-        - DomainName:
-            Ref: !GetAtt sampleEnvironment.EndpointURL
+        - DomainName: !GetAtt sampleEnvironment.EndpointURL
           Id: CloudFront Origin
           CustomOriginConfig:
             OriginProtocolPolicy: match-viewer

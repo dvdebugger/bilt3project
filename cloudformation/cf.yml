@@ -101,9 +101,6 @@ Outputs:
       Fn::GetAtt:
       - sampleEnvironment
       - EndpointURL
-  Name:
-    Description: Name of Environment
-    Value: !GetAtt sampleEnvironment.EnvironmentName
   DistributionId:
     Description: CloudFront Distribution Id
     Value: !Ref 'myDistribution' 

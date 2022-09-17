@@ -65,6 +65,14 @@ pipeline {
                 sh "aws s3 cp ./target/**.war s3://$AWS_S3_BUCKET/$ARTIFACT_NAME"
             }
         }
+        
+            stage('db') {
+            steps {
+                sh "mvn spring-boot:run"
+                
+            }
+       
+        }
 
         stage('Deploy') {
             steps {
@@ -78,4 +86,3 @@ pipeline {
     
 }
     }
- 

@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{   
-        AWS_S3_BUCKET = "debuggers"
+        AWS_S3_BUCKET = "anaasmeamjad"
         ARTIFACT_NAME = "hello-world.war"
         AWS_ACCESS_KEY_ID     = credentials('USER')
         AWS_SECRET_ACCESS_KEY = credentials('PASS')

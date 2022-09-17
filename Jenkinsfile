@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment{   
-        AWS_S3_BUCKET = "anaasmeamjad"
+        AWS_S3_BUCKET = "lamaalawwad-s3-bilt3"
         ARTIFACT_NAME = "hello-world.war"
         AWS_ACCESS_KEY_ID     = credentials('LamaAlawwad-aws-secret-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('LamaAlawwad-aws-secret-access-key')
-        AWS_EB_APP_NAME = "Debuggers"
+        AWS_EB_APP_NAME = "Debbugers"
         AWS_EB_APP_VERSION = "${BUILD_ID}"
-        AWS_EB_ENVIRONMENT = "Debuggers-env"
+        AWS_EB_ENVIRONMENT = "Debbugers-env"
     
     }
 

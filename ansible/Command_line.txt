@@ -1,0 +1,33 @@
+Command line 
+
+
+Create SSH without password
+
+ssh-keygen 
+
+Copy the public SSH key from the source machine to the target machine
+
+Try ssh to the other image
+
+cd .ssh/
+ls
+cat id_rsa.pub
+
+
+next copy the link and then pest it on the 2 anthor instanses like this
+
+ls
+authorized_keys
+nano authorized_keys
+pest it insid this file
+
+install python in the jenkins instance 
+sudo apt update
+sudo apt install python3
+
+ansible-playbook  <filename>
+
+
+
+
+

@@ -41,7 +41,7 @@ pipeline {
             steps {
 
         }
-
+        }
 
         stage('Package') {
             steps {

@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment{   
-        AWS_S3_BUCKET = "anaasmeamjad"
+        AWS_S3_BUCKET = "debuggers"
         ARTIFACT_NAME = "hello-world.war"
         AWS_ACCESS_KEY_ID     = credentials('USER')
         AWS_SECRET_ACCESS_KEY = credentials('PASS')
@@ -13,8 +13,16 @@ pipeline {
 
     stages {
         
-
-   
+       stage('quality scan'){
+            steps{
+                sh '''
+  #         mvn clean verify sonar:sonar \
+  #-Dsonar.projectKey=online-Amjad-B2D2 \
+  #-Dsonar.host.url=http://52.23.193.18 \
+  #-Dsonar.login=sqp_18e8efb1dcbf32a0af39bc6d079337796e593148
+  #              '''
+            }
+        }
 
         stage('Validate') {
             steps {
@@ -28,14 +36,14 @@ pipeline {
                 sh "mvn compile"
             }
         }
-
+        
         stage('Test') {
             steps {
                 sh "mvn test"
                 
             }
-      
         }
+
 
 
         stage('Package') {

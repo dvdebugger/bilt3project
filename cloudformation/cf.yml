@@ -1,0 +1,106 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'AWS CloudFormation Sample Template ElasticBeanstalkSample: Configure and launch the AWS Elastic Beanstalk sample application. **WARNING** This template creates one or more Amazon EC2 instances. You will be billed for the AWS resources used if you create a stack from this template.'
+Resources:
+  sampleApplication:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      Description: AWS Elastic Beanstalk Sample Application
+      ApplicationName: Debuggers
+  sampleApplicationVersion: 
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties:
+      ApplicationName:
+        Ref: sampleApplication
+      SourceBundle:
+         S3Bucket:
+          Fn::Join:
+          - '-'
+          - - elasticbeanstalk-samples
+            - Ref: AWS::Region
+         S3Key: elasticbeanstalk-sampleapp.war
+  ConfigurationTemplates:
+   Type: AWS::ElasticBeanstalk::ConfigurationTemplate
+   Properties:
+      ApplicationName:
+        Ref: sampleApplication
+      SolutionStackName: 64bit Amazon Linux 2 v4.2.18 running Tomcat 8.5 Corretto 11
+      OptionSettings:
+      - Namespace: aws:autoscaling:asg
+        OptionName: MinSize
+        Value: '2'
+      - Namespace: aws:autoscaling:asg
+        OptionName: MaxSize
+        Value: '6'
+      - Namespace: aws:elasticbeanstalk:environment
+        OptionName: EnvironmentType
+        Value: LoadBalanced
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: IamInstanceProfile
+        Value: !Ref MyInstanceProfile
+  sampleEnvironment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      EnvironmentName: Debuggers-env
+      VersionLabel : 
+        Ref: sampleApplicationVersion
+      ApplicationName:
+        Ref: sampleApplication
+      TemplateName: 
+        Ref: ConfigurationTemplates
+      Description: AWS Elastic Beanstalk Environment running Sample Application
+  myDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+        - DomainName: !GetAtt sampleEnvironment.EndpointURL
+          Id: CloudFront Origin
+          CustomOriginConfig:
+            OriginProtocolPolicy: match-viewer
+        DefaultRootObject: index.jsp
+        DefaultCacheBehavior:
+          TargetOriginId: CloudFront Origin
+          ForwardedValues:
+            QueryString: true
+          ViewerProtocolPolicy: allow-all
+        CacheBehaviors:
+        - TargetOriginId: CloudFront Origin
+          ForwardedValues:
+            QueryString: false
+          ViewerProtocolPolicy: allow-all
+          MinTTL: 500
+          PathPattern: '*.jpg'
+        Comment: Create CloudFront Distribution Using CloudFormation.
+        Enabled: true
+  MyInstanceRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: Beanstalk EC2 role
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker 
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier
+  MyInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Roles:
+        - !Ref MyInstanceRole    
+Outputs:
+  URL:
+    Description: URL of the AWS Elastic Beanstalk Environment
+    Value:
+      Fn::GetAtt:
+      - sampleEnvironment
+      - EndpointURL
+  DistributionId:
+    Description: CloudFront Distribution Id
+    Value: !Ref 'myDistribution' 

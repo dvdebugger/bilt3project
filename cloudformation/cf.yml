@@ -57,7 +57,6 @@ Resources:
           Id: CloudFront Origin
           CustomOriginConfig:
             OriginProtocolPolicy: match-viewer
-        DefaultRootObject: index.jsp
         DefaultCacheBehavior:
           TargetOriginId: CloudFront Origin
           ForwardedValues:

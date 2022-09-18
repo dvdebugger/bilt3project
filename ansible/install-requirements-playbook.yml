@@ -1,3 +1,4 @@
+---
 - hosts: web1
   tasks:
     - name: Task - 1 Update APT package manager repositories cache
@@ -23,7 +24,7 @@
         packages:
            - maven
 
-    - name: Task -4 Install AWSCLI using Ansible
+    - name: Task -4 Install Git using Ansible
       become: yes
       apt:
         name: "{{ packages }}"
@@ -40,3 +41,12 @@
       vars:
         packages:
            - awscli
+
+    - name: Task -6 Install Python3 using Ansible
+      become: yes
+      apt:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+           - python3

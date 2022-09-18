@@ -57,18 +57,22 @@ Resources:
           Id: CloudFront Origin
           CustomOriginConfig:
             OriginProtocolPolicy: match-viewer
-        DefaultRootObject: index.jsp
         DefaultCacheBehavior:
           TargetOriginId: CloudFront Origin
           ForwardedValues:
-            QueryString: true
+            QueryString: false
           ViewerProtocolPolicy: allow-all
+          DefaultTTL: 45
+          MinTTL: 30
+          MaxTTL: 60
         CacheBehaviors:
         - TargetOriginId: CloudFront Origin
           ForwardedValues:
             QueryString: false
           ViewerProtocolPolicy: allow-all
-          MinTTL: 500
+          DefaultTTL: 45
+          MinTTL: 30
+          MaxTTL: 60
           PathPattern: '*.jpg'
         Comment: Create CloudFront Distribution Using CloudFormation.
         Enabled: true

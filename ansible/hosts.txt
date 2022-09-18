@@ -1,3 +1,0 @@
-[webservers]
-web1 ansible_host=ec2-34-203-217-162.compute-1.amazonaws.com ansible_python_int>
-

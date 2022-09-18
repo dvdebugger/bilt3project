@@ -58,7 +58,7 @@ Resources:
           CustomOriginConfig:
             OriginProtocolPolicy: match-viewer
         DefaultCacheBehavior:
-        - TargetOriginId: CloudFront Origin
+          TargetOriginId: CloudFront Origin
           ForwardedValues:
             QueryString: false
           ViewerProtocolPolicy: allow-all

@@ -1,13 +1,13 @@
 pipeline {
     agent any
     environment{   
-        AWS_S3_BUCKET = "anaasmeamjad"
+        AWS_S3_BUCKET = "name"
         ARTIFACT_NAME = "hello-world.war"
         AWS_ACCESS_KEY_ID     = credentials('USER')
         AWS_SECRET_ACCESS_KEY = credentials('PASS')
-        AWS_EB_APP_NAME = "Debuggers"
+        AWS_EB_APP_NAME = "name"
         AWS_EB_APP_VERSION = "${BUILD_ID}"
-        AWS_EB_ENVIRONMENT = "Debuggers-env"
+        AWS_EB_ENVIRONMENT = "name"
     
     }
 
@@ -16,10 +16,7 @@ pipeline {
        stage('quality scan'){
             steps{
                 sh '''
-  #         mvn clean verify sonar:sonar \
-  #-Dsonar.projectKey=online-Amjad-B2D2 \
-  #-Dsonar.host.url=http://52.23.193.18 \
-  #-Dsonar.login=sqp_18e8efb1dcbf32a0af39bc6d079337796e593148
+  # 
   #              '''
             }
         }
